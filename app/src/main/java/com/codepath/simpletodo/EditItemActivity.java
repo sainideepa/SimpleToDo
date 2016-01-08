@@ -35,18 +35,6 @@ public class EditItemActivity extends AppCompatActivity {
         txtproduct.setText(product);
         txtproduct.setSelection(txtproduct.getText().length());
 
-        //resultI.putExtra("product", 200);
-
-        //setResult(Activity.RESULT_OK, resultI);
-        //finish();
-        //String product = getIntent().getStringExtra("product");
-        //int code = getIntent().getIntExtra("code",0);
-        //TextView txtProduct = (TextView) findViewById(R.id.editText);
-        //Intent i = getIntent();
-        //txtProduct = i.getExtras().getString("product");
-      //  String product = i.getStringExtra("product");
-        //txtProduct.setText(txtProduct);
-
     }
 
 
