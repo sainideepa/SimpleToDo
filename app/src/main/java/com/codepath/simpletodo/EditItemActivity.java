@@ -96,47 +96,5 @@ public class EditItemActivity extends AppCompatActivity {
             throw new RuntimeException("Generating file failed", e);
         }
 
-//        Path path = Paths.get("test.txt");
-//        Charset charset = StandardCharsets.UTF_8;
-//
-//        String content = new String(Files.readAllBytes(path), charset);
-//        content = content.replaceAll("foo", "bar");
-//        Files.write(path, content.getBytes(charset));
-
-//        try {
-//            String content = IOUtils.toString(new FileInputStream("todo.txt"), "UTF8");
-//            content = content.replaceAll(oldString, newString);
-//            IOUtils.write(content, new FileOutputStream("todo.txt"), "UTF8");
-//        } catch (IOException e) {
-//
-//        }
-
-
-//        try{
-//            String verify, putData;
-//            File file = new File("file.txt");
-//            file.createNewFile();
-//            FileWriter fw = new FileWriter(file);
-//            BufferedWriter bw = new BufferedWriter(fw);
-//            bw.write("Some text here for a reason");
-//            bw.flush();
-//            bw.close();
-//            FileReader fr = new FileReader(file);
-//            BufferedReader br = new BufferedReader(fr);
-//
-//            while( (verify=br.readLine()) != null ){ //***editted
-//                //**deleted**verify = br.readLine();**
-//                if(verify != null){ //***edited
-//                    putData = verify.replaceAll(oldString, newString);
-//                    bw.write(putData);
-//                }
-//            }
-//            br.close();
-//
-//
-//        }catch(IOException e){
-//            e.printStackTrace();
-//        }
-
     }
 }
