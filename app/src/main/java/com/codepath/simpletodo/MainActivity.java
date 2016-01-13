@@ -1,36 +1,25 @@
 package com.codepath.simpletodo;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.content.Intent;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -147,10 +136,15 @@ public class MainActivity extends AppCompatActivity
         //Toast.makeText(MainActivity.this,"Test",Toast.LENGTH_LONG).show();
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
-        itemsAdapter.add(itemText);
-        etNewItem.setText("");
-        writeItems();
-        itemsAdapter.notifyDataSetChanged();
+
+        if(itemText.length() >0) {
+            itemsAdapter.add(itemText);
+            etNewItem.setText("");
+            writeItems();
+            itemsAdapter.notifyDataSetChanged();
+        } else {
+            new InvalidItemCustomDialog().show(getSupportFragmentManager(), null);
+        }
     }
 
     public void onEditItem(View v) {
@@ -173,33 +167,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
      return true;
     }
 
     private void editItems(String newString, String oldString)
     {
-
-//        try {
-//            String content = FileUtils.readFileToString(new File("todo.txt"), "UTF-8");
-//            content = content.replaceAll(newString+"/n", oldString +"/n");
-//            File tempFile = new File("todo.txt");
-//            FileUtils.writeStringToFile(tempFile, content, "UTF-8");
-//        } catch (IOException e) {
-//            //Simple exception handling, replace with what's necessary for your use case!
-//            throw new RuntimeException("Generating file failed", e);
-//        }
-
-//        Path path = Paths.get("test.txt");
-//        Charset charset = StandardCharsets.UTF_8;
-//
-//        String content = new String(Files.readAllBytes(path), charset);
-//        content = content.replaceAll("foo", "bar");
-//        Files.write(path, content.getBytes(charset));
-
         try {
             String content = IOUtils.toString(new FileInputStream("todo.txt"), "UTF8");
             content = content.replaceAll(oldString, newString);
@@ -209,31 +181,7 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-//        try{
-//            String verify, putData;
-//            File file = new File("file.txt");
-//            file.createNewFile();
-//            FileWriter fw = new FileWriter(file);
-//            BufferedWriter bw = new BufferedWriter(fw);
-//            bw.write("Some text here for a reason");
-//            bw.flush();
-//            bw.close();
-//            FileReader fr = new FileReader(file);
-//            BufferedReader br = new BufferedReader(fr);
-//
-//            while( (verify=br.readLine()) != null ){ //***editted
-//                //**deleted**verify = br.readLine();**
-//                if(verify != null){ //***edited
-//                    putData = verify.replaceAll(oldString, newString);
-//                    bw.write(putData);
-//                }
-//            }
-//            br.close();
-//
-//
-//        }catch(IOException e){
-//            e.printStackTrace();
-//        }
+
 
     }
 }
