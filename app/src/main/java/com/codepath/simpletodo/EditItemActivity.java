@@ -1,22 +1,16 @@
 package com.codepath.simpletodo;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class EditItemActivity extends AppCompatActivity {
@@ -45,12 +39,18 @@ public class EditItemActivity extends AppCompatActivity {
     {
     //closes this acitivity and return to main if user clicks on back
      EditText etName = (EditText)findViewById(R.id.editText);
-      Intent data = new Intent();
-        data.putExtra("name", etName.getText().toString());
-        data.putExtra("code", 200);
-        setResult(RESULT_OK, data);
-        save(etName.getText().toString(), getIntent().getStringExtra("product"));
-        finish();
+        String editedText = etName.getText().toString();
+
+        if(editedText.length()>0 && CommonUtility.isAlphaNumeric(editedText)) {
+            Intent data = new Intent();
+            data.putExtra("name", etName.getText().toString());
+            data.putExtra("code", 200);
+            setResult(RESULT_OK, data);
+            save(editedText, getIntent().getStringExtra("product"));
+            finish();
+        } else {
+            new InvalidItemCustomDialog().show(getSupportFragmentManager(), null);
+        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

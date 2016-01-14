@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
 
-        if(itemText.length() >0) {
+        if(itemText.length()>0 && CommonUtility.isAlphaNumeric(itemText)) {
             itemsAdapter.add(itemText);
             etNewItem.setText("");
             writeItems();
@@ -170,4 +170,6 @@ public class MainActivity extends AppCompatActivity
         itemsAdapter.notifyDataSetChanged();
         writeItems();
     }
+
+
 }
