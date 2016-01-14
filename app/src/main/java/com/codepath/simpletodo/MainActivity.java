@@ -31,9 +31,6 @@ public class MainActivity extends AppCompatActivity
 
     private String edit;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +53,6 @@ public class MainActivity extends AppCompatActivity
                         edit = product;
                         i.putExtra("product",product);
                         startActivityForResult(i,REQUEST_CODE);
-                        // Launching new Activity on selecting single List Item
-                        //Intent i = new Intent(MainActivity.this, EditItemActivity.class);
-                        //startActivity(i);
-
                     }
                 }
         );
@@ -77,7 +70,6 @@ public class MainActivity extends AppCompatActivity
         for (int i = 0; i < items.size(); i++) {
             if ((items.get(i).toString()).equals(edit)) {
                 items.set(i, item);
-                //editItems(item, edit);
             }
         }
 
@@ -94,9 +86,6 @@ public class MainActivity extends AppCompatActivity
                 new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapter, View item, int pos, long id) {
-//                        items.remove(pos);
-//                        itemsAdapter.notifyDataSetChanged();
-//                        writeItems();
                         DeleteCustomDialog deleteCustomDialog = new DeleteCustomDialog();
                         Bundle args = new Bundle();
                         args.putInt("pos", pos);
@@ -124,7 +113,6 @@ public class MainActivity extends AppCompatActivity
         }catch (IOException e){
                items = new ArrayList<>();
         }
-       //items = new ArrayList<>();
     }
 
     private void writeItems()
@@ -138,7 +126,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
     public void onAddItem(View v) {
-        //Toast.makeText(MainActivity.this,"Test",Toast.LENGTH_LONG).show();
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
 
@@ -156,10 +143,8 @@ public class MainActivity extends AppCompatActivity
 
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
-        //itemsAdapter.update(itemText);
         etNewItem.setText("");
         writeItems();
-        //item
     }
 
     @Override

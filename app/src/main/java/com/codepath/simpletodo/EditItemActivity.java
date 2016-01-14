@@ -27,8 +27,6 @@ public class EditItemActivity extends AppCompatActivity {
         this.setContentView(R.layout.activity_edit_item);
 
         EditText txtproduct = (EditText)findViewById(R.id.editText);
-
-
         Intent resultI = getIntent();
 
         String product = resultI.getStringExtra("product");
@@ -40,12 +38,12 @@ public class EditItemActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_edit_item, menu);
         return true;
     }
     public void onSubmit(View v)
-    {     //closes this acitivity and return to main if user clicks on back
+    {
+    //closes this acitivity and return to main if user clicks on back
      EditText etName = (EditText)findViewById(R.id.editText);
       Intent data = new Intent();
         data.putExtra("name", etName.getText().toString());
