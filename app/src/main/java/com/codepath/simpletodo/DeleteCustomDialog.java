@@ -27,14 +27,14 @@ public class DeleteCustomDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Are you sure you want to remove this item?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage(getString(R.string.delete_message))
+                .setPositiveButton(getString(R.string.delete_yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ((MainActivity)getActivity()).deleteItem(pos);
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.delete_no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dismiss();;

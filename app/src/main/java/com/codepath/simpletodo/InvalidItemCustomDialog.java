@@ -15,8 +15,8 @@ public class InvalidItemCustomDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savenInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Item name cannot be empty.")
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setMessage(getString(R.string.empty_item_message))
+                .setPositiveButton(getString(R.string.invalid_item_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dismiss();

@@ -98,12 +98,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
-
-
-
-
-
     private void readItems()
     {
         File filesDir = getFilesDir();
