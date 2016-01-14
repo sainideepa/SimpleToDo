@@ -94,9 +94,14 @@ public class MainActivity extends AppCompatActivity
                 new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapter, View item, int pos, long id) {
-                        items.remove(pos);
-                        itemsAdapter.notifyDataSetChanged();
-                        writeItems();
+//                        items.remove(pos);
+//                        itemsAdapter.notifyDataSetChanged();
+//                        writeItems();
+                        DeleteCustomDialog deleteCustomDialog = new DeleteCustomDialog();
+                        Bundle args = new Bundle();
+                        args.putInt("pos", pos);
+                        deleteCustomDialog.setArguments(args);
+                        deleteCustomDialog.show(getSupportFragmentManager(), null);
                         return true;
                     }
                 }
@@ -179,9 +184,11 @@ public class MainActivity extends AppCompatActivity
         } catch (IOException e) {
 
         }
+    }
 
-
-
-
+    public void deleteItem(int pos) {
+        items.remove(pos);
+        itemsAdapter.notifyDataSetChanged();
+        writeItems();
     }
 }
