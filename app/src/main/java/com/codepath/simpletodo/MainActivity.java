@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity
                 items.set(i, item);
             }
         }
-
         itemsAdapter.notifyDataSetChanged();
     }
 
