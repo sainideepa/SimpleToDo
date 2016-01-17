@@ -1,12 +1,15 @@
-package com.codepath.simpletodo;
+package com.codepath.simpletodo.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
+import com.codepath.simpletodo.utilities.CommonUtility;
+import com.codepath.simpletodo.dialogs.InvalidItemCustomDialog;
+import com.codepath.simpletodo.R;
+import com.codepath.simpletodo.database.Item;
 
 public class EditItemActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.codepath.simpletodo;
+package com.codepath.simpletodo.database;
 
 import android.os.Parcel;
 import android.os.Parcelable;

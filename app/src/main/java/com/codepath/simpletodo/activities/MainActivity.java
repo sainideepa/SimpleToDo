@@ -1,4 +1,4 @@
-package com.codepath.simpletodo;
+package com.codepath.simpletodo.activities;
 
 import android.content.Intent;
 import android.os.Parcelable;
@@ -9,6 +9,14 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.codepath.simpletodo.utilities.CommonUtility;
+import com.codepath.simpletodo.adapters.CustomAdapter;
+import com.codepath.simpletodo.dialogs.DeleteCustomDialog;
+import com.codepath.simpletodo.dialogs.InvalidItemCustomDialog;
+import com.codepath.simpletodo.R;
+import com.codepath.simpletodo.database.DatabaseHandler;
+import com.codepath.simpletodo.database.Item;
+
 import org.apache.commons.io.IOUtils;
 
 
@@ -17,7 +25,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {

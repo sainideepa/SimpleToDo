@@ -1,4 +1,4 @@
-package com.codepath.simpletodo;
+package com.codepath.simpletodo.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.codepath.simpletodo.R;
+import com.codepath.simpletodo.database.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +35,7 @@ public class CustomAdapter extends ArrayAdapter<Item> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        Item user = getItem(position);
+        Item item = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_layout, parent, false);
@@ -40,7 +43,7 @@ public class CustomAdapter extends ArrayAdapter<Item> {
         // Lookup view for data population
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
         // Populate the data into the template view using the data object
-        tvName.setText(user.name);
+        tvName.setText(item.getName());
         // Return the completed view to render on screen
         return convertView;
     }

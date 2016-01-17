@@ -1,10 +1,12 @@
-package com.codepath.simpletodo;
+package com.codepath.simpletodo.dialogs;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+
+import com.codepath.simpletodo.R;
 
 /**
  * Created by deepasaini on 1/13/16.
