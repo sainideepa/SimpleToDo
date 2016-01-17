@@ -23,19 +23,19 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 * Feedback to user using dialog fragment.
-* Empty item names is not allowed.
+* Empty item names are not allowed.
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/NBIwK9v.gifv' title='SimpleToDo' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/NBIwK9v.gifv' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+TODO: Need to figure out how to handle duplicate item names. This can be handled more cleanly once more features like **Due Date** or **Priority for todo items** are added in the app.
 
 ## License
 
