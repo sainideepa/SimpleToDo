@@ -1,18 +1,14 @@
 package com.codepath.simpletodo;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 
@@ -21,25 +17,29 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {
-    ArrayList<String> items;
-    ArrayAdapter<String> itemsAdapter;
+    ArrayList<Item> items;
+    CustomAdapter itemsAdapter;
     ListView lvitems;
     private final int REQUEST_CODE = 20;
 
-    private String edit;
+
+    DatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        db = new DatabaseHandler(this);
+
         setContentView(R.layout.activity_main);
+
         lvitems = (ListView)findViewById(R.id.lvitems);
         readItems();
-        itemsAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, items);
+        itemsAdapter = new CustomAdapter(this, items);
         lvitems.setAdapter(itemsAdapter);
         setupListViewListener();
         lvitems.setOnItemClickListener(
@@ -48,34 +48,40 @@ public class MainActivity extends AppCompatActivity
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
 
-                        String product = ((TextView) view).getText().toString();
-                        Intent i = new Intent(getApplicationContext(),EditItemActivity.class);
-                        edit = product;
-                        i.putExtra("product",product);
-                        startActivityForResult(i,REQUEST_CODE);
+                        Item item = (Item)parent.getItemAtPosition(position);
+                        for (Item element:items) {
+                            if(element.getName().equals(item.getName())) {
+                                item.setId(element.getId());
+                            }
+                        }
+
+                        Intent i = new Intent(MainActivity.this,EditItemActivity.class);
+                        i.putExtra("item", (Parcelable) item);
+                        startActivityForResult(i, REQUEST_CODE);
                     }
                 }
         );
-
-
     }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // REQUEST_CODE is defined above
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
             //super.onActivityResult(requestCode, resultCode, data);
             String item = data.getExtras().getString("name");
-        int REQUEST_CODE = data.getExtras().getInt("code", 0);
+            int REQUEST_CODE = data.getExtras().getInt("code", 0);
+            Item newItem = data.getExtras().getParcelable("item");
 
-        for (int i = 0; i < items.size(); i++) {
-            if ((items.get(i).toString()).equals(edit)) {
-                items.set(i, item);
+            for (int i = 0; i <= items.size(); i++) {
+            if ((items.get(i).getId()== newItem.getId())) {
+                items.set(i, newItem);
+                db.updateItem(newItem);
+                break;
             }
         }
         itemsAdapter.notifyDataSetChanged();
     }
-
-
 
     }
 
@@ -99,59 +105,40 @@ public class MainActivity extends AppCompatActivity
 
     private void readItems()
     {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try{
-            items = new ArrayList<>(FileUtils.readLines(todoFile));
-        }catch (IOException e){
-               items = new ArrayList<>();
+        items = new ArrayList<Item>();
+
+        File database=getApplicationContext().getDatabasePath("ItemDatabase.db");
+        if (!database.exists()) {
+            //TODO
+        } else {
+            items  = (ArrayList)db.getAllItems();
         }
+
+
+
+
     }
 
-    private void writeItems()
-    {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try{
-            FileUtils.writeLines(todoFile, items);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+    private void writeItems(Item item) {
+        DatabaseHandler db = new DatabaseHandler(this);
+        long pk = db.addItem(item);
+        item.setId(pk);
     }
+
     public void onAddItem(View v) {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
 
         if(itemText.length()>0 && CommonUtility.isAlphaNumeric(itemText)) {
-            itemsAdapter.add(itemText);
+            Item item = new Item(itemText);
+            writeItems(item);
+            itemsAdapter.add(item);
             etNewItem.setText("");
-            writeItems();
             itemsAdapter.notifyDataSetChanged();
         } else {
             new InvalidItemCustomDialog().show(getSupportFragmentManager(), null);
         }
     }
-
-    public void onEditItem(View v) {
-
-        EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
-        String itemText = etNewItem.getText().toString();
-        etNewItem.setText("");
-        writeItems();
-    }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        //getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item)
-//    {
-//     return true;
-//    }
 
     private void editItems(String newString, String oldString)
     {
@@ -165,10 +152,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void deleteItem(int pos) {
+        db.deleteItem(items.get(pos));
         items.remove(pos);
         itemsAdapter.notifyDataSetChanged();
-        writeItems();
-    }
 
+    }
 
 }
